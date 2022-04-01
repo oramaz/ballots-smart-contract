@@ -6,12 +6,8 @@ require("dotenv").config();
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  defaultNetwork: "rinkeby",
   networks: {
-    hardhat: {
-      chainId: 4,
-      gasPrice: 0,
-    },
+    hardhat: {},
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
       accounts: [process.env.ACCOUNT_PRIVATE],

@@ -115,8 +115,8 @@
       ]
     },
     "/home/oramaz/Documents/code/ballots-smart-contract/contracts/Ballots.sol": {
-      "lastModificationDate": 1648757814727,
-      "contentHash": "4ed7bdbfb1f2c4e018500bfdeb981764",
+      "lastModificationDate": 1648852294319,
+      "contentHash": "9b23f45d90246787270184b32bd0bd8e",
       "sourceName": "contracts/Ballots.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -138,6 +138,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },

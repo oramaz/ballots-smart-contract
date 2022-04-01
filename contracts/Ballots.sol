@@ -105,7 +105,6 @@ contract Ballots {
 				ballots[ballotID].winnerIndexes = new uint[](0);
 				ballots[ballotID].winnerScore = proposalScore;
 			}
-
 			ballots[ballotID].winnerIndexes.push(uint(proposalIndex));
 		}
 

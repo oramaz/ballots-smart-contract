@@ -6,6 +6,12 @@ const votePayable = {
 };
 const threeDays = 3 * 24 * 60 * 60;
 
+// Convert the time in EVM to 3 days.
+const increaseBlockTimeOn3Days = async () => {
+  ethers.provider.send("evm_increaseTime", [threeDays + 3600]);
+  ethers.provider.send("evm_mine");
+};
+
 describe("Ballots contract", function () {
   let Contract;
   let contract;
@@ -39,12 +45,18 @@ describe("Ballots contract", function () {
     contract = await Contract.deploy();
   });
 
+  /*
+   * Deployment subsection
+   */
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
       expect(await contract.owner()).to.equal(owner.address);
     });
   });
 
+  /*
+   * Ballot creating subsection
+   */
   describe("Ballot creating", function () {
     it("Should be reverted with a onlyOwner reason", async function () {
       await expect(
@@ -70,6 +82,9 @@ describe("Ballots contract", function () {
     });
   });
 
+  /*
+   * Ballot completing subsection
+   */
   describe("Ballot completing", function () {
     it("Should be reverted with a ballot unexistence reason", async function () {
       await expect(
@@ -145,6 +160,9 @@ describe("Ballots contract", function () {
     });
   });
 
+  /*
+   * Voting subsection
+   */
   describe("Voting", function () {
     it("Should be reverted with a ballot unexistence reason", async function () {
       await contract.connect(owner).createBallot(props);
@@ -229,7 +247,10 @@ describe("Ballots contract", function () {
     });
   });
 
-  describe("Withdrawing ballot's fee", function () {
+  /*
+   * Withdrawing fee subsection
+   */
+  describe("Withdrawing fee", function () {
     it("Should be reverted with a onlyOwner reason", async function () {
       await contract.connect(owner).createBallot(props);
 
@@ -266,6 +287,9 @@ describe("Ballots contract", function () {
     });
   });
 
+  /*
+   * Getting ballot's info subsection
+   */
   describe("Getting ballot's info", function () {
     it("Should be reverted with a ballot unexistence reason", async function () {
       await expect(contract.getBallotInfo(0)).to.be.revertedWith(
@@ -283,7 +307,10 @@ describe("Ballots contract", function () {
     });
   });
 
-  describe("Getting voter's ballot vote", function () {
+  /*
+   * Getting voter's ballot vote info subsection
+   */
+  describe("Getting voter's ballot vote info", function () {
     it("Should be reverted with a ballot unexistence reason", async function () {
       await expect(
         contract.getVoterBallotVote(addr1.address, 0)
@@ -302,8 +329,3 @@ describe("Ballots contract", function () {
     });
   });
 });
-
-const increaseBlockTimeOn3Days = async () => {
-  ethers.provider.send("evm_increaseTime", [threeDays + 3600]);
-  ethers.provider.send("evm_mine");
-};

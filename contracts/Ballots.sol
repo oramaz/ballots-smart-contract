@@ -7,14 +7,14 @@ pragma solidity ^0.8.0;
 contract Ballots {
 	// Info of each ballot.
 	struct Ballot {
-		address[] proposals;	// Proposals' addresses list getting from ballot's creator.
+		address[] proposals;		// Proposals' addresses list getting from ballot's creator.
 		uint[] scores;			// Points of proposals. The index corresponds to the index
-								// in the proposals array.
+							// in the proposals array.
 		uint256 fund;			// The amount of money received from votes.
 		uint256 created;		// Date of creation of the ballot.
 		bool isCompleted;		// Has the ballot been completed.
 		uint winnerScore;		// The highest score.
-		uint[] winnerIndexes;	// List of proposals having the highest score. 
+		uint[] winnerIndexes;		// List of proposals having the highest score. 
 	}
 
 	// Contract's owner address.

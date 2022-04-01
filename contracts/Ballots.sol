@@ -26,7 +26,7 @@ contract Ballots {
 
     /*
      * Info of each voter's votes.
-     * mapping(voter address => mapping(ballot ID => ballot's proposal address)).
+     * mapping('voter address' => mapping('ballot ID' => 'ballot's proposal address')).
      */
     mapping(address => mapping(uint256 => address)) public voted;
     // Info of each ballot.

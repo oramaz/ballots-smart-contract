@@ -65,7 +65,7 @@ describe("Ballots contract", function () {
     });
 
     it("Should be reverted with a proposals quantity reason", async function () {
-      let props = [];
+      props = [];
 
       await expect(
         contract.connect(owner).createBallot(props)
@@ -75,8 +75,8 @@ describe("Ballots contract", function () {
     it("Should create new 2 ballots", async function () {
       await contract.connect(owner).createBallot(props);
 
-      let b0 = await contract.ballots(0);
-      let b1 = await contract.ballots(1);
+      const b0 = await contract.ballots(0);
+      const b1 = await contract.ballots(1);
 
       expect(b0.created > 0 && b1.created == 0).to.be.true;
     });
@@ -106,7 +106,7 @@ describe("Ballots contract", function () {
       await increaseBlockTimeOn3Days();
       await contract.connect(addr1).completeBallot(0);
 
-      let ballot = await contract.ballots(0);
+      const ballot = await contract.ballots(0);
 
       expect(ballot.isCompleted).to.be.true;
       expect(ballot.fund).to.equal(ethers.utils.parseEther("0.001"));
@@ -127,7 +127,7 @@ describe("Ballots contract", function () {
       await increaseBlockTimeOn3Days();
       await contract.connect(addr1).completeBallot(0);
 
-      let ballot = await contract.ballots(0);
+      const ballot = await contract.ballots(0);
 
       expect(ballot.isCompleted).to.be.true;
       expect(ballot.fund).to.equal(ethers.utils.parseEther("0.006"));
@@ -148,7 +148,7 @@ describe("Ballots contract", function () {
       await increaseBlockTimeOn3Days();
       await contract.connect(addr1).completeBallot(0);
 
-      let ballot = await contract.ballots(0);
+      const ballot = await contract.ballots(0);
 
       expect(ballot.isCompleted).to.be.true;
 

@@ -7,7 +7,6 @@ require("dotenv").config();
  */
 module.exports = {
   networks: {
-    hardhat: {},
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
       accounts: [process.env.ACCOUNT_PRIVATE],

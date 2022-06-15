@@ -23,6 +23,8 @@ contract Ballots {
     uint256 fee = 10;
     // The cost that voter should pass to vote.
     uint256 voteCost = 0.01 ether;
+    // The amount of fee available to withdraw.
+    uint256 private feeAmount = 0;
 
     /*
      * Info of each voter's votes.
@@ -50,6 +52,10 @@ contract Ballots {
         _;
     }
 
+    event BallotStarting(uint256 indexed id, address[] proposals, address indexed by);
+    event Vote(address indexed voter, uint256 indexed ballotID);
+    event BallotCompletion(uint256 indexed id, address[] winners, address indexed by);
+
     /**
      * @dev Creates a new ballot.
      *
@@ -76,6 +82,8 @@ contract Ballots {
                 winnerIndexes: new uint256[](0)
             })
         );
+
+        emit BallotStarting(id, proposalAddrs, msg.sender);
     }
 
     /**
@@ -124,6 +132,8 @@ contract Ballots {
         }
 
         voted[msg.sender][ballotID] = proposalAddr;
+
+        emit Vote(msg.sender, ballotID);
     }
 
     /**
@@ -146,6 +156,7 @@ contract Ballots {
         ballots[ballotID].isCompleted = true;
 
         uint256 winnersCount = ballot.winnerIndexes.length;
+        address[] memory winners = new address[](winnersCount);
 
         // Check if there are winners in a list.
         // 'winnersCount' equals 0 means that no votes were sent to the ballot.
@@ -161,9 +172,15 @@ contract Ballots {
                 address payable winner = payable(
                     ballot.proposals[ballot.winnerIndexes[i]]
                 );
+                winners[i] = winner;
                 winner.transfer(proposalWinning);
             }
         }
+
+        feeAmount += ballots[ballotID].fund;
+        ballots[ballotID].fund = 0;
+
+        emit BallotCompletion(ballotID, winners, msg.sender);
     }
 
     /**
@@ -171,23 +188,15 @@ contract Ballots {
      *
      * Requirements:
      *
-     * - the ballot with a 'ballotID' is exist.
      * - the sender is the owner.
-     * - the ballot is completed.
+     * - the fee amount is larger than 0.
      */
-    function withdrawFee(uint256 ballotID)
+    function withdrawFee()
         public
         onlyOwner
-        ballotExists(ballotID)
     {
-        require(
-            ballots[ballotID].isCompleted,
-            "The ballot hasn't been completed yet"
-        );
-
-        payable(owner).transfer(ballots[ballotID].fund);
-
-        ballots[ballotID].fund = 0;
+        require(feeAmount > 0, "Fee is zero");
+        payable(owner).transfer(feeAmount);
     }
 
     /**

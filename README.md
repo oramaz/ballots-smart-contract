@@ -6,9 +6,11 @@
 ------------
 #### Run tests + solidity-coverage
 ```
-npx hardhat coverage --network hardhat
+npx hardhat coverage
 ```
 #### Deploy into rinkeby testnet
 ```
 npx hardhat run scripts/deploy.js --network rinkeby
 ```
+#### Additional tasks
+`start-vote`, `vote`, `end-vote`, `withdraw`

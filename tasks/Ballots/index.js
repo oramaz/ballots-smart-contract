@@ -1,5 +1,3 @@
-// 0x5d7322C0A5C2347A6ca342E786fa66768e1F82BC
-
 task('start-vote', 'Creates a new ballot (only owner)')
 	.addParam('contract', 'Contract address')
 	.addOptionalParam('from', 'Creator address')

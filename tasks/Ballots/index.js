@@ -1,7 +1,7 @@
 task('start-vote', 'Creates a new ballot (only owner)')
 	.addParam('contract', 'Contract address')
-	.addParam('proposals', 'Proposals adresses list (separated by commas)')
 	.addOptionalParam('from', 'Creator address')
+	.addParam('proposals', 'Proposals adresses list (separated by commas)')
 	.setAction(async (args) => {
 		let contract = await ethers.getContractAt('Ballots', args.contract);
 		if (args.from) {
@@ -19,9 +19,9 @@ task('start-vote', 'Creates a new ballot (only owner)')
 
 task('vote', 'Sends vote into the ballot')
 	.addParam('contract', 'Contract address')
+	.addOptionalParam('from', 'Voter address')
 	.addParam('id', 'Ballot ID')
 	.addParam('proposal', 'Proposal address')
-	.addOptionalParam('from', 'Voter address')
 	.setAction(async (args) => {
 		let contract = await ethers.getContractAt('Ballots', args.contract);
 		if (args.from) {
@@ -40,8 +40,8 @@ task('vote', 'Sends vote into the ballot')
 
 task('end-vote', 'Completes existing ballot')
 	.addParam('contract', 'Contract address')
-	.addParam('id', 'Ballot ID')
 	.addOptionalParam('from', 'Account address')
+	.addParam('id', 'Ballot ID')
 	.setAction(async (args) => {
 		let contract = await ethers.getContractAt('Ballots', args.contract);
 		if (args.from) {

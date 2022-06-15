@@ -30,9 +30,9 @@ contract Ballots {
      * Info of each voter's votes.
      * mapping('voter address' => mapping('ballot ID' => 'ballot's proposal address')).
      */
-    mapping(address => mapping(uint256 => address)) voted;
+    mapping(address => mapping(uint256 => address)) public voted;
     // Info of each ballot.
-    mapping(uint256 => Ballot) ballots;
+    mapping(uint256 => Ballot) public ballots;
     // Generating unique ID for a new ballot.
     uint256 ballotIDCounter;
 
